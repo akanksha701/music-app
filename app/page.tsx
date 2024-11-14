@@ -2,6 +2,7 @@
 import { Nunito } from "next/font/google";
 import {  useUser } from '@clerk/nextjs'
 import NavbarPage from "./components/navbar/Navbar";
+import HomePage from './components/home/Home';
 const font = Nunito({
   subsets: ["latin"],
 });
@@ -14,6 +15,8 @@ console.log(user)
 
   
   return (
-         <NavbarPage /> 
+    <div>
+      <HomePage/>
+    </div>
   );
 }
