@@ -5,7 +5,7 @@ import { z } from "zod";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-export async function GET(req: any) {
+export async function POST(req: any) {
   try {
     // const body = await req?.json();
     
@@ -22,7 +22,7 @@ export async function GET(req: any) {
         dateOfBirth: req?.body?.dateOfBirth || new Date("1990-01-01"),
         isActive: req?.body?.isActive || true,
         isDeleted: req?.body?.isDeleted || false,
-        email: req?.body?.email || "akanksha31@gmail.com",
+        email: req?.body?.email || "akanksha3@gmail.com",
         password: hashedPassword,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -64,7 +64,7 @@ export async function GET(req: any) {
   }
 }
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
 
     const users = await User.find();
