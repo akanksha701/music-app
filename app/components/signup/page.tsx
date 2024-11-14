@@ -12,7 +12,9 @@ interface IFormInput {
     lastname: string;
     dob: string;
     email: string;
+    mobileNumber: number;
     password: string;
+    profilePicture: FileList;
 }
 const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>()
@@ -75,6 +77,16 @@ const Signup = () => {
                             options={{ required: 'email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'invalid email address' } }}
                         />
                         <Input
+                            label="Mobile Number"
+                            placeholder="Mobile Number"
+                            required
+                            type="number"
+                            id="mobileNumber"
+                            register={register}
+                            errors={errors}
+                            options={{ required: 'mobile number is required', minLength: { value: 10, message: 'mobile number must be more than 10 digits' }, maxLength: { value: 10, message: 'mobile number must be less than 10 digits' } }}
+                        />
+                        <Input
                             label="Password"
                             placeholder="Password"
                             required
@@ -85,8 +97,30 @@ const Signup = () => {
                             options={{ required: 'password is required', minLength: { value: 8, message: 'password must be more than 8 characters' } }}
                         />
                         <RadioButton radioOptions={['female', 'male', 'other']} radioLabel='Gender' />
+                        <Input
+                            label="Profile Picture"
+                            placeholder="Profile Picture"
+                            required
+                            type="file"
+                            id="profilePicture"
+                            register={register}
+                            errors={errors}
+                            options={{ 
+                                required: false,
+                                validate: {
+                                    fileType: (value: FileList) => 
+                                        !value[0] || 
+                                        ['image/jpeg', 'image/png'].includes(value[0].type) || 
+                                        'File must be a JPEG or PNG image',
+                                    fileSize: (value: FileList) =>
+                                        !value[0] ||
+                                        value[0].size <= 5 * 1024 * 1024 ||
+                                        'File size must be less than 5MB'
+                                }
+                            }}
+                        />
                         <div className="flex flex-row justify-end mt-3">
-                            <Button name="Signup" type='submit' onClick={() => { handleSubmit(onSubmit) }} />
+                            <Button name="Signup" type="submit" onClick={handleSubmit(onSubmit)} />
                         </div>
                     </form>
 

@@ -10,7 +10,7 @@ const RadioButton = (props: RadioButtonProps) => {
     const { radioOptions, radioLabel } = props;
     return (
         <>
-            <div className="flex items-center mt-3">
+            <div className="flex items-center mb-6">
                 <label className="ms-2 text-sm font-medium text-black-900 dark:text-black-300">{radioLabel}</label>
                 {
 
