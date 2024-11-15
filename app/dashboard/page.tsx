@@ -35,9 +35,7 @@ const MusicPage = () => {
                         </div>
                         <div className="text-center">
                             <div className="bg-purple-100 rounded-full p-6 w-20 h-20 mx-auto mb-4">
-                                <svg className="w-8 h-8 text-purple-600 mx-auto" fill="currentColor" viewBox="0 0 20 20">
                                 <Image src="/images/offline.png" alt="offline" width={100} height={100} />
-                                </svg>
                             </div>
                             <h3 className="text-xl font-bold mb-2">Offline Mode</h3>
                             <p className="text-gray-600">Download your favorite tracks and listen offline</p>
@@ -72,7 +70,6 @@ const MusicPage = () => {
                                 Get Started
                             </button>
                         </div>
-                        {/* Add more pricing tiers similarly */}
                     </div>
                 </div>
             </section>
