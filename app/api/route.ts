@@ -1,7 +1,15 @@
 import connectToDatabase from "@/lib/dbConnection";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await connectToDatabase();
+//  try {
+    await connectToDatabase();
+//  } catch (error) {
+//     return NextResponse.json(
+//         { error: "Internal server error" },
+//         { status: 500 }
+//       );
+//  }
 }

@@ -1,62 +1,46 @@
 import { NextResponse } from "next/server";
-import connectToDatabase from "@/lib/dbConnection";
 import User from "@/models/User";
-import { z } from "zod";
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import { NextApiResponse } from "next";
+import dbConnect from "@/lib/dbConnection";
 
-export async function POST(req: any) {
+export async function POST(req: any, res: NextApiResponse) {
   try {
-    // const body = await req?.json();
-    
-    try {
-      // Hash password before creating user
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(req?.body?.password || "password", salt);
+    //  await  connectToDatabase();
+    await dbConnect();
+    const body = await req.json();
 
-      const user = new User({
-        firstName: req?.body?.firstName || "Akanksha",
-        lastName: req?.body?.lastName || "Patel",
-        mobileNumber: req?.body?.mobileNumber || "9876543210",
-        gender: req?.body?.gender || "female",
-        dateOfBirth: req?.body?.dateOfBirth || new Date("1990-01-01"),
-        isActive: req?.body?.isActive || true,
-        isDeleted: req?.body?.isDeleted || false,
-        email: req?.body?.email || "akanksha3@gmail.com",
-        password: hashedPassword,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+    const { id, emailAddresses, firstName, lastName } = body.user;
+    const userExisted: any = await User.findOne({ clerkUserId: id });
+    if (userExisted) {
+      return NextResponse.json({
+        status: 409,
+        message: "The user already exists",
       });
-      
-      await user.save();
-
-      // Return success response (excluding password)
-      const userObject = user.toObject();
-      const { password, ...userWithoutPassword } = userObject;
-      
-      return NextResponse.json(
-        { message: "User created successfully", user: userWithoutPassword },
-        { status: 201 }
-      );
-    } catch (error) {
-      if (error instanceof mongoose.Error.ValidationError) {
-        return NextResponse.json(
-          { error: "Validation error", details: error.errors },
-          { status: 400 }
-        );
-      }
-      throw error;
     }
-  } catch (error) {
-    console.error("Signup error:", error);
-    
-    if (error instanceof z.ZodError) {
+    await User.create({
+      clerkUserId: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: emailAddresses[0]?.emailAddress,
+      mobileNumber: parseInt(
+        body.user.primaryPhoneNumber.phoneNumber.substring(3)
+      ),
+      isActive: true,
+      isDeleted: false,
+    }).then((newUser)=>
+    {
       return NextResponse.json(
-        { error: "Invalid input", details: error.errors },
+        { status: 200 ,user: newUser}
+      );
+    }).catch((error)=>
+    {
+      return NextResponse.json(
+        { error: "some error occured error" },
         { status: 400 }
       );
-    }
-
+    })
+    
+  } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -66,7 +50,6 @@ export async function POST(req: any) {
 
 export async function GET(req: Request) {
   try {
-
     const users = await User.find();
     return NextResponse.json({ users });
   } catch (error) {

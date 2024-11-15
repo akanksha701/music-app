@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
+  clerkUserId:{
+    type:String,
+    required: [true, 'clerk user id is required'],
+  },
   firstName: { 
     type: String, 
     required: [true, 'First name is required'],
@@ -16,16 +20,6 @@ const UserSchema = new mongoose.Schema({
   email: { 
     type: String, 
     required: [true, 'Email is required'],
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email address']
-  },
-  password: { 
-    type: String, 
-    required: [true, 'Password is required'],
-    minLength: [6, 'Password must be at least 6 characters long'],
-    maxLength: [100, 'Password cannot exceed 100 characters']
   },
   isActive: { 
     type: Boolean, 
@@ -39,7 +33,6 @@ const UserSchema = new mongoose.Schema({
   },
   gender: { 
     type: String, 
-    required: [true, 'Gender is required'],
     enum: {
       values: ['male', 'female', 'other'],
       message: '{VALUE} is not a valid gender'
@@ -47,13 +40,6 @@ const UserSchema = new mongoose.Schema({
   },
   dateOfBirth: { 
     type: Date,
-    required: [true, 'Date of birth is required'],
-    validate: {
-      validator: function(value: Date) {
-        return value <= new Date();
-      },
-      message: 'Date of birth cannot be in the future'
-    }
   },
   mobileNumber: { 
     type: Number, 

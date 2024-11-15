@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
-
 const connectToDatabase = async () => {
   try {
-    if (mongoose.connection.readyState >= 1) {
-      return;
-    }
-
     const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/music-app';
     
     await mongoose.connect(uri, {

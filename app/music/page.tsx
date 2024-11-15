@@ -1,9 +1,8 @@
 'use client'
 import React from 'react'
-import MusicPlayCard from '../components/MusicPlayCard'
 
 const MusicPage = () => {
-  return <MusicPlayCard />
+  return <>jkjk</>
 }
 
 export default MusicPage
