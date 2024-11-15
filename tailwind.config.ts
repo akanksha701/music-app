@@ -16,6 +16,11 @@ module.exports = {
           200: "#17C964",
           300: "#FFFFFF",
         }
+      },
+      backgroundImage: {
+        'profile-bg': "url('/images/profile-bg.jpg')",
+        
+         
       }
     },
   },

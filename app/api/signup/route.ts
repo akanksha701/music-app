@@ -5,8 +5,6 @@ import dbConnect from "@/lib/dbConnection";
 
 export async function POST(req: any, res: NextApiResponse) {
   try {
-    //  await  connectToDatabase();
-    await dbConnect();
     const body = await req.json();
 
     const { id, emailAddresses, firstName, lastName } = body.user;
@@ -27,19 +25,16 @@ export async function POST(req: any, res: NextApiResponse) {
       ),
       isActive: true,
       isDeleted: false,
-    }).then((newUser)=>
-    {
-      return NextResponse.json(
-        { status: 200 ,user: newUser}
-      );
-    }).catch((error)=>
-    {
-      return NextResponse.json(
-        { error: "some error occured error" },
-        { status: 400 }
-      );
     })
-    
+      .then((newUser) => {
+        return NextResponse.json({ status: 200, user: newUser });
+      })
+      .catch((error) => {
+        return NextResponse.json(
+          { error: "some error occured error" },
+          { status: 400 }
+        );
+      });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },
@@ -54,7 +49,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ users });
   } catch (error) {
     console.error("Signup error:", error);
-    // Always return a response
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
