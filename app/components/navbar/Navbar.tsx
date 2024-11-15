@@ -2,10 +2,12 @@
 import SpotifyLogo from '@/public/spotify.svg'
 import Image from 'next/image'
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-import { useClerk, useUser } from '@clerk/nextjs'
-const NavbarPage = () => {
+import {  useClerk, useUser } from '@clerk/nextjs'
+import checkRole from '@/utils/roles';
+export default  function NavbarPage() {
   const { signOut } = useClerk();
   const { user } = useUser();
+  console.log(user)
   return (
     <Navbar isBordered>
     <NavbarContent justify="start">
@@ -26,6 +28,11 @@ const NavbarPage = () => {
             Home
           </Link>
         </NavbarItem>
+        { user && user.publicMetadata.role === 'admin' &&        <NavbarItem>
+          <Link color="foreground" href="/admin">
+            Admin Panel
+          </Link>
+        </NavbarItem>}
         <NavbarItem >
           <Link href="/my-playlists"  color="foreground">
             My Playlists
@@ -83,4 +90,3 @@ const NavbarPage = () => {
 
   )
 }
-export default NavbarPage
