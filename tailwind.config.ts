@@ -4,31 +4,21 @@ const { nextui } = require("@nextui-org/react");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    // ...
-    // make sure it's pointing to the ROOT node_module
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",  // Add your app files
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",  // Add your component files
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        secondary: {
+          100: "#9353D3",
+          200: "#17C964",
+          300: "#FFFFFF",
+        }
+      }
+    },
   },
   darkMode: "class",
-  plugins: [nextui({
-    themes: {
-      light: {
-        colors: {
-          background: '#ffffff',
-          primary: {
-            DEFAULT: '#000000',
-            foreground: '#ffffff',
-          },
-          secondary: {
-            DEFAULT: '#000000',
-            foreground: '#ffffff',
-            100: '#12A150',
-            
-          },
-        },
-      },
-    },
-  })],
+  plugins: [nextui()],
 };

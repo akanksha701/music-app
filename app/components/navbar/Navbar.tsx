@@ -2,7 +2,6 @@
 import SpotifyLogo from '@/public/spotify.svg'
 import Image from 'next/image'
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-import { useRouter } from 'next/navigation';
 import { useClerk, useUser } from '@clerk/nextjs'
 const NavbarPage = () => {
   const { signOut } = useClerk();
